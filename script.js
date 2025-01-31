@@ -43,23 +43,19 @@ document.getElementById('upload').addEventListener('change', async (event) => {
             const avgContrast = totalContrast / (2 * count);
 
             const tone = avgR > avgB ? 'Warm (Cálida)' : 'Cool (Fría)';
-            const nostalgiaWeight = Math.min(100, Math.round((avgSaturation + avgR / 255) * 50));
+            const nostalgiaWeight = Math.min(100, Math.round((avgSaturation / 255 + avgContrast / 255) * 50));
 
             // Mostrar resultados con explicaciones
             document.getElementById('result').innerHTML = `
                 <p><strong>Average Color (RGB):</strong> R=${Math.round(avgR)}, G=${Math.round(avgG)}, B=${Math.round(avgB)}</p>
-                <p>El color promedio refleja el balance general de tonos en tu imagen.</p>
                 <p><strong>Tone Detected:</strong> ${tone}</p>
-                <p>Los tonos cálidos (rojo, amarillo) suelen evocar nostalgia y emoción. Los tonos fríos (azul, verde) evocan calma.</p>
                 <p><strong>Average Saturation:</strong> ${Math.round(avgSaturation)}</p>
-                <p>La saturación mide la intensidad del color. Los colores más intensos pueden sentirse más vívidos o emocionales.</p>
                 <p><strong>Average Contrast:</strong> ${Math.round(avgContrast)}</p>
-                <p>El contraste mide la diferencia entre las luces y las sombras, dando profundidad a la imagen.</p>
                 <p><strong>Weight of Nostalgia:</strong></p>
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${nostalgiaWeight}%"></div>
+                    <div class="progress" style="width: ${nostalgiaWeight}%;"></div>
                 </div>
-                <p>El peso de la nostalgia se basa en la saturación y el tono cálido predominante.</p>
+                <p>El peso de la nostalgia combina saturación, contraste y tonos cálidos/fríos para reflejar la emoción evocada por la imagen.</p>
             `;
         };
         img.src = reader.result;
