@@ -1,3 +1,4 @@
+console.log("El archivo script.js se cargó correctamente.");
 document.getElementById("upload").addEventListener("change", async function(event) {
     const file = event.target.files[0];
     if (file) {
