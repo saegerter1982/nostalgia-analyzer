@@ -17,25 +17,40 @@ document.getElementById('upload').addEventListener('change', async (event) => {
             const pixels = imageData.data;
 
             let totalR = 0, totalG = 0, totalB = 0, count = 0;
+            let totalSaturation = 0, totalContrast = 0;
+
             for (let i = 0; i < pixels.length; i += 4) {
-                totalR += pixels[i];
-                totalG += pixels[i + 1];
-                totalB += pixels[i + 2];
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+
+                totalR += r;
+                totalG += g;
+                totalB += b;
                 count++;
+
+                // Calcular saturación y contraste
+                const max = Math.max(r, g, b);
+                const min = Math.min(r, g, b);
+                totalSaturation += max - min; // Saturación
+                totalContrast += max + min;  // Contraste
             }
 
             const avgR = totalR / count;
             const avgG = totalG / count;
             const avgB = totalB / count;
+            const avgSaturation = totalSaturation / count;
+            const avgContrast = totalContrast / (2 * count);
 
-            const desaturation = Math.abs(avgR - avgG - avgB) / 3;
             const tone = avgR > avgB ? 'Warm (Cálida)' : 'Cool (Fría)';
-            const nostalgiaWeight = Math.min(100, Math.round((desaturation + avgR / 255) * 50));
+            const nostalgiaWeight = Math.min(100, Math.round((avgSaturation + avgR / 255) * 50));
 
             // Mostrar resultados
             document.getElementById('result').innerHTML = `
                 <p>Average Color (RGB): R=${Math.round(avgR)}, G=${Math.round(avgG)}, B=${Math.round(avgB)}</p>
                 <p>Tone Detected: ${tone}</p>
+                <p>Average Saturation: ${Math.round(avgSaturation)}</p>
+                <p>Average Contrast: ${Math.round(avgContrast)}</p>
                 <p>Weight of Nostalgia:</p>
                 <div class="progress-bar">
                     <div class="progress" style="width: ${nostalgiaWeight}%"></div>
