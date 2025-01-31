@@ -8,9 +8,10 @@
 </head>
 <body>
     <h1>Nostalgia Analyzer</h1>
-    <p>Upload a photo to analyze its nostalgic tones.</p>
+    <p>Upload a photo to analyze its nostalgic tones and colors.</p>
     <input type="file" id="upload" accept="image/*">
-    <p id="result"></p>
+    <canvas id="canvas" width="400" height="400" style="border:1px solid black; display: none;"></canvas>
+    <div id="result"></div>
     <script src="script.js"></script>
 </body>
 </html>
