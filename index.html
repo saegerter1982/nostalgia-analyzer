@@ -4,21 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nostalgia Analyzer</title>
-    <!-- TensorFlow.js para análisis -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <!-- Archivo de estilos -->
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
 <body>
     <h1>Nostalgia Analyzer</h1>
     <p>Upload a photo to analyze its nostalgic tones and colors.</p>
-    <!-- Input para subir imágenes -->
     <input type="file" id="upload" accept="image/*">
-    <!-- Canvas para renderizar la imagen -->
     <canvas id="canvas" width="400" height="400" style="display: none;"></canvas>
-    <!-- Div para mostrar resultados -->
     <div id="result"></div>
-    <!-- Script principal -->
     <script src="script.js"></script>
 </body>
 </html>
