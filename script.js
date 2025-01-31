@@ -1,56 +1,48 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    text-align: center;
-    margin: 20px;
-}
+document.getElementById('upload').addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-h1 {
-    font-size: 2.5em;
-    color: #444;
-    margin-bottom: 10px;
-}
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-p {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
+    const reader = new FileReader();
+    reader.onload = function () {
+        const img = new Image();
+        img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
 
-input[type="file"] {
-    margin: 20px;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-}
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
 
-#result {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #fff;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-}
+            let totalR = 0, totalG = 0, totalB = 0, count = 0;
+            for (let i = 0; i < pixels.length; i += 4) {
+                totalR += pixels[i];
+                totalG += pixels[i + 1];
+                totalB += pixels[i + 2];
+                count++;
+            }
 
-.progress-bar {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 10px;
-}
+            const avgR = totalR / count;
+            const avgG = totalG / count;
+            const avgB = totalB / count;
 
-.progress {
-    height: 20px;
-    background-color: #76c7c0;
-    width: 0%;
-    transition: width 0.5s ease;
-}
+            const desaturation = Math.abs(avgR - avgG - avgB) / 3;
+            const tone = avgR > avgB ? 'Warm (Cálida)' : 'Cool (Fría)';
+            const nostalgiaWeight = Math.min(100, Math.round((desaturation + avgR / 255) * 50));
+
+            // Mostrar resultados
+            document.getElementById('result').innerHTML = `
+                <p>Average Color (RGB): R=${Math.round(avgR)}, G=${Math.round(avgG)}, B=${Math.round(avgB)}</p>
+                <p>Tone Detected: ${tone}</p>
+                <p>Weight of Nostalgia:</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${nostalgiaWeight}%"></div>
+                </div>
+            `;
+        };
+        img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+});
