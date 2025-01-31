@@ -25,6 +25,11 @@ document.getElementById("upload").addEventListener("change", async function(even
             const coolScore = rgb[2]; // Azul indica frialdad
             const tone = warmScore > coolScore ? "Warm (Cálida)" : "Cool (Fría)";
 
+            // Mensajes de depuración
+            console.log("Warm Score:", warmScore);
+            console.log("Cool Score:", coolScore);
+            console.log("Detected Tone:", tone);
+
             // Mostrar los resultados
             document.getElementById("result").innerHTML = `
                 <p>Average Color (RGB): 
