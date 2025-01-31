@@ -20,12 +20,18 @@ document.getElementById("upload").addEventListener("change", async function(even
             const meanColor = tensor.mean([0, 1]);
             const rgb = await meanColor.array();
 
-            // Mostrar el resultado
+            // Determinar si la imagen es cálida o fría
+            const warmScore = rgb[0] + rgb[1]; // Rojo + Verde indican calidez
+            const coolScore = rgb[2]; // Azul indica frialdad
+            const tone = warmScore > coolScore ? "Warm (Cálida)" : "Cool (Fría)";
+
+            // Mostrar los resultados
             document.getElementById("result").innerHTML = `
                 <p>Average Color (RGB): 
                 R=${Math.round(rgb[0])}, 
                 G=${Math.round(rgb[1])}, 
                 B=${Math.round(rgb[2])}</p>
+                <p>Tone Detected: ${tone}</p>
             `;
 
             // Limpiar memoria
