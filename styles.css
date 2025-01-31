@@ -40,17 +40,9 @@ input[type="file"] {
     text-align: left;
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 10px;
-}
-
 .progress {
     height: 20px;
-    background-color: #76c7c0;
+    background-color: #ffa07a; /* Un tono cálido */
     width: 0%;
     transition: width 0.5s ease;
 }
