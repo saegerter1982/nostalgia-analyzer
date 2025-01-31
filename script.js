@@ -1,21 +1,32 @@
 document.getElementById("upload").addEventListener("change", async function(event) {
     const file = event.target.files[0];
     if (file) {
-        const image = document.createElement("img");
+        const image = new Image();
         image.src = URL.createObjectURL(file);
 
-        // Esperar a que la imagen se cargue
+        // Procesar la imagen al cargar
         image.onload = async () => {
-            // Convertir la imagen en un tensor
-            const tensor = tf.browser.fromPixels(image);
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.style.display = "block";
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
 
-            // Calcular el promedio de colores (rojo, verde, azul)
-            const meanColor = tensor.mean([0, 1]); // Promedio a lo largo de las dimensiones ancho y alto
-            const rgb = await meanColor.array(); // Convertir tensor a array
+            // Convertir la imagen a un tensor
+            const tensor = tf.browser.fromPixels(canvas);
+
+            // Calcular el promedio de colores
+            const meanColor = tensor.mean([0, 1]);
+            const rgb = await meanColor.array();
 
             // Mostrar el resultado
-            const resultText = `Mean Color (RGB): R=${Math.round(rgb[0])}, G=${Math.round(rgb[1])}, B=${Math.round(rgb[2])}`;
-            document.getElementById("result").textContent = resultText;
+            document.getElementById("result").innerHTML = `
+                <p>Average Color (RGB): 
+                R=${Math.round(rgb[0])}, 
+                G=${Math.round(rgb[1])}, 
+                B=${Math.round(rgb[2])}</p>
+            `;
 
             // Limpiar memoria
             tf.dispose(tensor);
