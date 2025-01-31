@@ -1,48 +1,50 @@
-console.log("El archivo script.js se cargó correctamente.");
-document.getElementById("upload").addEventListener("change", async function(event) {
+// Cuando se sube una imagen
+document.getElementById('upload').addEventListener('change', async (event) => {
     const file = event.target.files[0];
-    if (file) {
-        const image = new Image();
-        image.src = URL.createObjectURL(file);
+    if (!file) return;
 
-        // Procesar la imagen al cargar
-        image.onload = async () => {
-            const canvas = document.getElementById("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.style.display = "block";
-            canvas.width = image.width;
-            canvas.height = image.height;
-            ctx.drawImage(image, 0, 0);
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-            // Convertir la imagen a un tensor
-            const tensor = tf.browser.fromPixels(canvas);
+    // Leer la imagen como URL
+    const reader = new FileReader();
+    reader.onload = function () {
+        const img = new Image();
+        img.onload = function () {
+            // Redimensionar imagen al canvas
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
 
-            // Calcular el promedio de colores
-            const meanColor = tensor.mean([0, 1]);
-            const rgb = await meanColor.array();
+            // Obtener datos de píxeles
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
 
-            // Determinar si la imagen es cálida o fría
-            const warmScore = rgb[0] + rgb[1]; // Rojo + Verde indican calidez
-            const coolScore = rgb[2]; // Azul indica frialdad
-            const tone = warmScore > coolScore ? "Warm (Cálida)" : "Cool (Fría)";
+            let totalR = 0, totalG = 0, totalB = 0, count = 0;
 
-            // Mensajes de depuración
-            console.log("Warm Score:", warmScore);
-            console.log("Cool Score:", coolScore);
-            console.log("Detected Tone:", tone);
+            // Sumar valores de cada píxel
+            for (let i = 0; i < pixels.length; i += 4) {
+                totalR += pixels[i];     // Red
+                totalG += pixels[i + 1]; // Green
+                totalB += pixels[i + 2]; // Blue
+                count++;
+            }
 
-            // Mostrar los resultados
-            document.getElementById("result").innerHTML = `
-                <p>Average Color (RGB): 
-                R=${Math.round(rgb[0])}, 
-                G=${Math.round(rgb[1])}, 
-                B=${Math.round(rgb[2])}</p>
+            // Promedio de colores
+            const avgR = totalR / count;
+            const avgG = totalG / count;
+            const avgB = totalB / count;
+
+            // Detectar tono general (cálido o frío)
+            const tone = avgR > avgB ? 'Warm (Cálida)' : 'Cool (Fría)';
+
+            // Mostrar resultados
+            document.getElementById('result').innerHTML = `
+                <p>Average Color (RGB): R=${Math.round(avgR)}, G=${Math.round(avgG)}, B=${Math.round(avgB)}</p>
                 <p>Tone Detected: ${tone}</p>
             `;
-
-            // Limpiar memoria
-            tf.dispose(tensor);
-            tf.dispose(meanColor);
         };
-    }
+        img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
 });
