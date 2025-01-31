@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nostalgia Analyzer</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nostalgia Analyzer</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Nostalgia Analyzer</h1>
-    <p>Upload a photo to analyze its nostalgic tones and colors.</p>
+  <h1>Nostalgia Analyzer</h1>
+  <p>Upload a photo to analyze its nostalgic tones, colors, and other attributes.</p>
+  <form>
     <input type="file" id="upload" accept="image/*">
-    <canvas id="canvas" width="400" height="400" style="display: none;"></canvas>
-    <div id="result"></div>
-    <script src="script.js"></script>
+  </form>
+  <div id="analysis">
+    <div id="image-preview"></div>
+    <div id="results">
+      <p><strong>Average Color (RGB):</strong> R=<span id="r"></span>, G=<span id="g"></span>, B=<span id="b"></span></p>
+      <p><strong>Tone Detected:</strong> <span id="tone"></span></p>
+      <p><strong>Average Saturation:</strong> <span id="saturation"></span></p>
+      <p><strong>Average Contrast:</strong> <span id="contrast"></span></p>
+      <p><strong>Brightness:</strong> <span id="brightness"></span></p>
+      <p><strong>Dark Areas (%):</strong> <span id="dark-areas"></span></p>
+      <p><strong>Weight of Nostalgia:</strong> <span id="nostalgia-weight"></span></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
