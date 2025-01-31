@@ -28,7 +28,6 @@ document.getElementById('upload').addEventListener('change', async (event) => {
             const avgG = totalG / count;
             const avgB = totalB / count;
 
-            // Calcular el "peso de la nostalgia"
             const desaturation = Math.abs(avgR - avgG - avgB) / 3;
             const tone = avgR > avgB ? 'Warm (Cálida)' : 'Cool (Fría)';
             const nostalgiaWeight = Math.min(100, Math.round((desaturation + avgR / 255) * 50));
@@ -37,7 +36,10 @@ document.getElementById('upload').addEventListener('change', async (event) => {
             document.getElementById('result').innerHTML = `
                 <p>Average Color (RGB): R=${Math.round(avgR)}, G=${Math.round(avgG)}, B=${Math.round(avgB)}</p>
                 <p>Tone Detected: ${tone}</p>
-                <p>Weight of Nostalgia: ${nostalgiaWeight}/100</p>
+                <p>Weight of Nostalgia:</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: ${nostalgiaWeight}%"></div>
+                </div>
             `;
         };
         img.src = reader.result;
