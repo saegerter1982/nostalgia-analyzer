@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nostalgia Analyzer</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nostalgia Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Nostalgia Analyzer</h1>
-  <p>Upload a photo to analyze its nostalgic tones, colors, and other attributes.</p>
-  <form>
-    <input type="file" id="upload" accept="image/*">
-  </form>
-  <div id="analysis">
-    <div id="image-preview"></div>
-    <div id="results">
-      <p><strong>Average Color (RGB):</strong> R=<span id="r"></span>, G=<span id="g"></span>, B=<span id="b"></span></p>
-      <p><strong>Tone Detected:</strong> <span id="tone"></span></p>
-      <p><strong>Average Saturation:</strong> <span id="saturation"></span></p>
-      <p><strong>Average Contrast:</strong> <span id="contrast"></span></p>
-      <p><strong>Brightness:</strong> <span id="brightness"></span></p>
-      <p><strong>Dark Areas (%):</strong> <span id="dark-areas"></span></p>
-      <p><strong>Weight of Nostalgia:</strong> <span id="nostalgia-weight"></span></p>
-    </div>
-  </div>
-  <script src="script.js"></script>
+    <header class="navbar">
+        <div class="menu">
+            <a href="#">[Menu]</a>
+            <a href="#">[Upload]</a>
+            <a href="#">[Analyze]</a>
+            <a href="#">[About]</a>
+            <a href="#">[Help]</a>
+        </div>
+    </header>
+    <main class="container">
+        <h1 class="title">Welcome Nostalgia Size Meter for Photos</h1>
+        <p class="description">
+            Analyze your images for nostalgic elements such as grayscale tones, sepia intensity, and brightness levels.
+        </p>
+        <div class="upload-section">
+            <input type="file" id="upload" accept="image/*" class="file-input">
+        </div>
+        <div id="output" class="result-box hidden">
+            <div class="image-preview">
+                <img id="preview" src="" alt="Uploaded Image">
+            </div>
+            <div class="metrics">
+                <p id="rgb"></p>
+                <p id="tone"></p>
+                <p id="grayscale"></p>
+                <p id="sepia"></p>
+                <p id="contrast"></p>
+                <p id="brightness"></p>
+                <p id="nostalgia-weight"></p>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Nostalgia Analyzer. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
