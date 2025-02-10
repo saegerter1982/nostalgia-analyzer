@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nostalgia Analyzer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header class="navbar">
         <div class="menu">
-            <a href="#">[Menu]</a>
-            <a href="#">[Upload]</a>
-            <a href="#">[Analyze]</a>
-            <a href="#">[About]</a>
-            <a href="#">[Help]</a>
+            <a href="#">Menu</a>
+            <a href="#">Upload</a>
+            <a href="#">Analyze</a>
+            <a href="#">About</a>
+            <a href="#">Help</a>
         </div>
     </header>
     <main class="container">
@@ -24,24 +26,56 @@
         <div class="upload-section">
             <input type="file" id="upload" accept="image/*" class="file-input">
         </div>
-        <div id="output" class="result-box hidden">
+        <section id="result-box" class="result-box " style="display:none;">
             <div class="image-preview">
                 <img id="preview" src="" alt="Uploaded Image">
             </div>
-            <div class="metrics">
-                <p id="rgb"></p>
-                <p id="tone"></p>
-                <p id="grayscale"></p>
-                <p id="sepia"></p>
-                <p id="contrast"></p>
-                <p id="brightness"></p>
-                <p id="nostalgia-weight"></p>
+            <div id="output" class="hidden">
+
+                <div class="metrics">
+                    <p id="rgb"></p>
+                    <p id="tone"></p>
+                    <p id="grayscale"></p>
+                    <p id="sepia"></p>
+                    <p id="contrast"></p>
+                    <p id="brightness"></p>
+                    <p id="nostalgia-weight"></p>
+                </div>
             </div>
-        </div>
+
+            <div id="color-palette"></div>
+
+            <!-- Nostalgia Meter container -->
+            <div>
+
+                <!-- <div id="nostalgia-meter"
+                style="width: 300px; height: 25px; background: #ccc; border-radius: 5px; overflow: hidden;">
+                <div id="nostalgia-bar"
+                    style="height: 100%; width: 0%; background: linear-gradient(to right, green, yellow, red); transition: width 0.5s;">
+                </div>
+            </div> -->
+                <!-- Container for the bars -->
+                <p id="nostalgia-label" style="font-weight: bold;"></p>
+                <div class="bars-container">
+                    <!-- Each bar has a fixed width, and will vary in height/color -->
+                    <div class="bar" id="bar1"></div>
+                    <div class="bar" id="bar2"></div>
+                    <div class="bar" id="bar3"></div>
+                    <div class="bar" id="bar4"></div>
+                    <div class="bar" id="bar5"></div>
+                    <div class="bar" id="bar6"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+
     </main>
     <footer class="footer">
         <p>&copy; 2025 Nostalgia Analyzer. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
 </body>
+
 </html>
